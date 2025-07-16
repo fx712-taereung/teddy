@@ -7,8 +7,6 @@
 .buildlog/
 .history
 
-
-
 # Flutter repo-specific
 /bin/cache/
 /bin/internal/bootstrap.bat
@@ -109,6 +107,111 @@ coverage/
 
 # Symbols
 app.*.symbols
+
+# Secrets and credentials
+*.pem
+*.key
+*.crt
+*.pfx
+*.p12
+*.der
+*.csr
+*.asc
+*.gpg
+*.env
+*.env.*
+.envrc
+*.secret
+*.secrets
+*.credentials
+*.token
+*.tokens
+*.pw
+*.pass
+*.password
+*.otp
+*.vault
+*.sops.yaml
+*.agekey
+
+# Common config files that may contain secrets
+config.yml
+config.yaml
+config.json
+secrets.yml
+secrets.yaml
+secrets.json
+
+# AWS, GCP, Azure, and cloud provider credentials
+.aws/
+*.aws/credentials
+.gcloud/
+.azure/
+docker-compose.override.yml
+
+# SSH files
+.ssh/
+id_rsa*
+id_dsa*
+id_ecdsa*
+id_ed25519*
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+*.db3
+*.sql
+
+# Backup and dump files
+*.bak
+*.backup
+*.old
+*.orig
+*.save
+*.swp
+*.swo
+*.tmp
+*.temp
+*~
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+
+# Crash and core dump files
+core
+*.core
+*.stackdump
+*.dmp
+
+# System files
+._*
+.Spotlight-V100
+.Trashes
+*.lnk
+
+# Node.js & npm
+.npmrc
+.npm/
+
+# Python
+.pytest_cache/
+__pycache__/
+
+# JetBrains IDEs
+.idea/
+*.iml
+
+# VSCode & editor settings
+.vscode/
+*.code-workspace
+
+# Misc
+*.cache
+.cache/
+*.pid
+*.pid.lock
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
