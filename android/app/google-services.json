@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "726059957937",
+    "project_id": "teddy-fx712",
+    "storage_bucket": "teddy-fx712.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726059957937:android:3e848b0b72100119e1ec90",
+        "android_client_info": {
+          "package_name": "com.fx712.teddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "726059957937-9cll4k6kgcf3s4thtfhbkcti4t7d87h0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-R_g6zsEnNIAped_wM3emUD_mduNpH8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "726059957937-9cll4k6kgcf3s4thtfhbkcti4t7d87h0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "726059957937-p7u2o749kdfl6pep77hmpoo8jhv5jue8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.teddy"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

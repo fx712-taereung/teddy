@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>726059957937-0s3iiiisucv0b08ven01c7htrhhk4kv6.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.726059957937-0s3iiiisucv0b08ven01c7htrhhk4kv6</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCcs_E_OnoFwK2P6MNhBaSoT3nvSYlokCk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>726059957937</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.fx712.teddy</string>
+	<key>PROJECT_ID</key>
+	<string>teddy-fx712</string>
+	<key>STORAGE_BUCKET</key>
+	<string>teddy-fx712.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:726059957937:ios:d0e9b669d607be99e1ec90</string>
+</dict>
+</plist>
