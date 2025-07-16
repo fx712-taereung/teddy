@@ -1,3 +1,9 @@
 {
-    
+  "phone_hint": "Enter your phone number",
+  "sms_hint": "Enter the verification code",
+  "send_code": "Send Code",
+  "verify": "Verify",
+  "phone_verify_failed": "Phone verification failed.",
+  "code_verify_failed": "Code verification failed.",
+  "choose_language": "Choose language"
 }

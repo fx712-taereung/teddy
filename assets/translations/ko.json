@@ -1,3 +1,9 @@
 {
-    
+  "phone_hint": "휴대폰 번호를 입력하세요",
+  "sms_hint": "인증번호를 입력하세요",
+  "send_code": "인증번호 전송",
+  "verify": "인증하기",
+  "phone_verify_failed": "휴대폰 인증에 실패했습니다.",
+  "code_verify_failed": "인증번호가 올바르지 않습니다.",
+  "choose_language": "언어 선택"
 }
