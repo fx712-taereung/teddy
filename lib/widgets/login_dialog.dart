@@ -4,16 +4,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:flutter/services.dart';
-import 'package:teddy/glass/glassCard.dart';
+import 'package:teddy/widgets/glass/glassCard.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+import '../widgets/glass/glassToast.dart';
+
+class LoginDialog extends StatefulWidget {
+  const LoginDialog({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginDialog> createState() => _LoginDialogState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginDialogState extends State<LoginDialog> {
   final _phoneController = TextEditingController();
   final _codeController = TextEditingController();
 
@@ -57,6 +59,21 @@ class _LoginScreenState extends State<LoginScreen> {
     // 필요시 더 추가
   ];
 
+  void _showCupertinoToast(BuildContext context, String message) {
+    late final OverlayEntry overlayEntry;
+    overlayEntry = OverlayEntry(
+      builder: (context) =>
+          Positioned(
+            bottom: 50,
+            left: 20,
+            right: 20,
+            child: CupertinoToastWidget(
+                message: message, overlayEntry: overlayEntry),
+          ),
+    );
+    Overlay.of(context).insert(overlayEntry);
+  }
+
   Future<void> _sendCode() async {
     setState(() => _loading = true);
     final String phoneNumber =
@@ -68,11 +85,8 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       verificationFailed: (e) {
         setState(() => _loading = false);
-        print(e);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('phone_verify_failed'.tr())),
-        );
-      },
+        _showCupertinoToast(context, "${'phone_verify_failed'.tr()}\n$e");
+        },
       codeSent: (verificationId, _) {
         setState(() {
           _verificationId = verificationId;
@@ -94,10 +108,9 @@ class _LoginScreenState extends State<LoginScreen> {
     );
     try {
       await FirebaseAuth.instance.signInWithCredential(credential);
+      Navigator.of(context).pop(); // 다이얼로그 닫기 (로그인 완료 시)
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('code_verify_failed'.tr())),
-      );
+      _showCupertinoToast(context, "${'code_verify_failed'.tr()}\n$e");
     }
     setState(() => _loading = false);
   }
@@ -166,60 +179,56 @@ class _LoginScreenState extends State<LoginScreen> {
     final locale = context.locale;
     final countryByLocale = _getCountryByLocale(locale);
 
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Stack(
-          children: [
-            Center(
-              child: GlassCard(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      '\u{1F9F8}',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFFC19A6B),
-                      ),
+    return SafeArea(
+      child: Stack(
+        children: [
+          Center(
+            child: GlassCard(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    '\u{1F9F8}',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFC19A6B),
                     ),
-                    const SizedBox(height: 16),
-                    !_codeSent ? _buildPhoneInput(isDark) : _buildCodeInput(isDark),
-                    if(!_loading && (_codeController.text.isNotEmpty || _phoneController.text.isNotEmpty)) const SizedBox(height: 16),
-                    _loading || (_codeController.text.isEmpty && _phoneController.text.isEmpty)
-                        ? SizedBox()
-                        : !_codeSent
-                        ? _glassButton('send_code'.tr(), _sendCode, isDark)
-                        : _glassButton('verify'.tr(), _verifyCode, isDark),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 16),
+                  !_codeSent ? _buildPhoneInput(isDark) : _buildCodeInput(isDark),
+                  if(!_loading && (_codeController.text.isNotEmpty || _phoneController.text.isNotEmpty)) const SizedBox(height: 16),
+                  _loading || (_codeController.text.isEmpty && _phoneController.text.isEmpty)
+                      ? SizedBox()
+                      : !_codeSent
+                      ? _glassButton('send_code'.tr(), _sendCode, isDark)
+                      : _glassButton('verify'.tr(), _verifyCode, isDark),
+                ],
               ),
             ),
-            Positioned(
-              bottom: 8,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: CupertinoButton(
-                  onPressed: _showLanguageSheet,
-                  child: Text(
-                    // 국기 + 현 로케일에 해당하는 국가명
-                    countryByLocale['flag']! + ' ' + _getCountryNameByLocale(countryByLocale, locale),
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: isDark ? Colors.white70 : Colors.black54,
-                      fontWeight: FontWeight.w500,
-                    ),
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: CupertinoButton(
+                onPressed: _showLanguageSheet,
+                child: Text(
+                  // 국기 + 현 로케일에 해당하는 국가명
+                  countryByLocale['flag']! + ' ' + _getCountryNameByLocale(countryByLocale, locale),
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: isDark ? Colors.white70 : Colors.black54,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-      backgroundColor: isDark ? const Color(0xFF181A1B) : const Color(0xFFF2F6FB),
     );
   }
 
@@ -262,7 +271,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 alignLabelWithHint: true,
                 contentPadding: const EdgeInsets.symmetric(vertical: 12),
                 hintStyle: TextStyle(
-                  color: isDark ? Colors.white.withOpacity(0.5) : CupertinoColors.systemGrey
+                    color: isDark ? Colors.white.withOpacity(0.5) : CupertinoColors.systemGrey
                 ),
               ),
               style: TextStyle(color: isDark ? Colors.white : Colors.black87),
@@ -303,6 +312,8 @@ class _LoginScreenState extends State<LoginScreen> {
             child: TextField(
               controller: _codeController,
               keyboardType: TextInputType.number,
+              maxLength: 6,
+              maxLengthEnforcement: MaxLengthEnforcement.enforced, // 강제 자르기
               decoration: InputDecoration(
                 hintText: 'sms_hint'.tr(),
                 border: InputBorder.none,
@@ -313,18 +324,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 isDense: true,
                 alignLabelWithHint: true,
                 contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                counterText: '', // <- 하단 0/6 글자 표시 없앰!
               ),
               onChanged: (value){
                 setState(() {
                   _codeController.text;
                 });
               },
-              style: TextStyle(color: isDark ? Colors.white : Colors.black87, letterSpacing: _codeController.text.isNotEmpty?8:0,),
+              style: TextStyle(
+                color: isDark ? Colors.white : Colors.black87,
+                letterSpacing: _codeController.text.isNotEmpty ? 8 : 0,
+              ),
             ),
           ),
           if(_loading) const CupertinoActivityIndicator(),
         ],
-      )
+      ),
     );
   }
 
