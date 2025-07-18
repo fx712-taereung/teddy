@@ -9,6 +9,7 @@ class GlassCard extends StatelessWidget {
   final List<BoxShadow>? boxShadow;
   final EdgeInsets padding;
   final bool minWidthMax; // If true, minWidth = maxWidth (가로 최대 넓이)
+  final bool isCircle; // If true, minWidth = maxWidth (가로 최대 넓이)
 
   const GlassCard({
     Key? key,
@@ -16,11 +17,12 @@ class GlassCard extends StatelessWidget {
     this.padding = const EdgeInsets.all(12.5),
     this.boxShadow,
     this.minWidthMax = false,
+    this.isCircle = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final borderRadius = BorderRadius.circular(12.5);
+    final borderRadius = BorderRadius.circular(isCircle?100:12.5);
 
     return Stack(
       children: [
